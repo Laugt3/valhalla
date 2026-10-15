@@ -1,0 +1,52 @@
+# Panel de Valhalla (Pages CMS · app.pagescms.org)
+# Edita content/catalogo.json. Las fotos se guardan en /img. Estructura de dos niveles (Pages CMS falla con JSON más anidado).
+media:
+  input: img
+  output: /img
+  extensions: [jpg, jpeg, png, webp]
+  rename: safe
+
+content:
+  - name: catalogo
+    label: Catálogo y WhatsApp
+    type: file
+    path: content/catalogo.json
+    format: json
+    fields:
+      - name: whatsapp
+        label: WhatsApp que recibe los pedidos (ej. 099 041 480)
+        type: string
+      - name: productos
+        label: Productos (arrastrá para ordenarlos)
+        type: object
+        list:
+          collapsible:
+            summary: "{fields.nombre}"
+        fields:
+          - { name: nombre, label: Nombre, type: string }
+          - name: categoria
+            label: Categoría
+            type: select
+            options:
+              values:
+                - { value: mesas, label: Mesas }
+                - { value: barras, label: Barras }
+                - { value: guardado, label: Guardado (vitrinas, estantes, cristaleros) }
+                - { value: otros, label: Otros }
+          - { name: foto, label: Foto, type: image }
+          - { name: medidas, label: "Medidas (ej. 1,60 × 0,90 m, alto 0,76 m)", type: string }
+          - { name: material, label: Material, type: string }
+          - { name: precio, label: "Precio ($). Dejalo en 0 para que diga «Consultar»", type: number }
+          - { name: precio_antes, label: "Precio anterior ($). Si es mayor que el precio, aparece como oferta", type: number }
+          - name: disenador
+            label: "Botón «Cambiar medidas» (abre el diseñador 3D con este mueble)"
+            type: select
+            options:
+              values:
+                - { value: "", label: No }
+                - { value: mesa, label: Mesa }
+                - { value: barra, label: Barra }
+                - { value: estanteria, label: Estantería }
+          - { name: largo, label: Largo en cm (para el diseñador), type: number }
+          - { name: ancho, label: Ancho en cm (para el diseñador), type: number }
+          - { name: alto, label: Alto en cm (para el diseñador), type: number }
